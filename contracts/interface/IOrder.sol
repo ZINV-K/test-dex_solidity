@@ -36,10 +36,15 @@ interface IOrder{
     function matching(address _taker) external;
 }
 
+// 주문상태
 enum State{
+    // 대기
     Pending,
+    // Filled 체결(NFT등 물품 거래 확장을 고려해 Complete로 표기)
     Complete,
+    // 주문 대기중 취소
     Cancelled,
+    // 주문 접수 or 체결 or 취소 시 에러 발생
     Error
 }
 
