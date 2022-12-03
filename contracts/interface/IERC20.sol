@@ -2,6 +2,10 @@ pragma solidity ^0.8.13;
 
 // ERC20인 토큰 컨트랙트에 있는 기능을 가져와서 인터페이스에 매핑시켜 사용.
 interface IERC20 {
+    struct ERC20 {
+        bool lock;
+    }
+
     // 토큰의 총 발행량을 반환함
     function totalSupply() external view returns (uint);
     // account에 보유하고 있는 balance를 반환함
