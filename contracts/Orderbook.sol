@@ -1,8 +1,9 @@
 pragma solidity ^0.8.13;
 
 import "./interface/IOrder.sol";
+import "./interface/IOrderbook.sol";
 
-contract Orderbook {
+contract Orderbook is IOrderbook{
     // 오더북 구분을 위한 unique id (BTC/USDT, ETH/USDT 등의 마켓을 구분할때 사용)
     uint id;
     // BTC/USDT (대상통화)/(기축통화)    
@@ -20,7 +21,7 @@ contract Orderbook {
     IOrder[] asks;
     // 현재 이 마켓에서 발생하는 거래에 적용될 공통 수수료율
     uint fee;
-    
+
     mapping(uint => IOrder) orders;
 
     // bids에서 접수된 주문을 id로 찾아서 bids배열에 추가
