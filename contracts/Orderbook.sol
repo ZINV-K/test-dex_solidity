@@ -38,4 +38,18 @@ contract Orderbook is IOrderbook{
         bids.match(_order);
         return true;
     };
+    
+    function addAsk(IOrder _order) returns (bool) {
+        // 주문을 bids배열에 끝에 추가함
+        bids.push(_order);
+        return true;
+    };
+
+    // asks에서 접수된 주문을 id로 찾아서 bids배열에 추가
+    function removeAsk(IOrder _order) returns (bool) {
+        // 주문을 bids에서 찾아서 삭제함
+        // To do
+        bids.match(_order);
+        return true;
+    };
 }

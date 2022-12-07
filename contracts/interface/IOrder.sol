@@ -26,16 +26,16 @@ interface IOrder{
     // 필요한 정보: 접수자, 파려는 토큰, 사려는 토큰, 가격, 수량 정보를 받음
     // 자동생성 정보: 수령자(풀 or 다른유저), 수수료(계산 필요)
     // public(공개), external(외부호출용), internal(내부사용)일지는 연산 방식에 의한 판단이 필요함
-    function ordering(address _maker, address _token0, address _token1, uint price, uint amount0, uint amount1) external;
+    function order(address _maker, address _token0, address _token1, uint price, uint amount0, uint amount1) external  returns (bool);
 
     // 주문 취소
     // 주문을 생성한 maker(owner)가 맞는지 확인하고 주문을 취소함
     // public(공개), external(외부호출용), internal(내부사용)일지는 연산 방식에 의한 판단이 필요함
-    function canceling(address _maker) external;
+    function cancel(address _maker) external returns (bool);
 
     // 주문 응하기
     // 주문에 응한사람 taker의 주문을 받아 특정 주문에 매칭
-    function matching(address _taker) external;
+    function matching(address _taker) external returns (bool);
 }
 
 // 주문상태
