@@ -25,31 +25,31 @@ contract Orderbook is IOrderbook{
     mapping(uint => IOrder) orders;
 
     // bids에서 접수된 주문을 id로 찾아서 bids배열에 추가
-    function addBid(IOrder _order) returns (bool) {
+    function addBid(IOrder _order) public returns (bool) {
         // 주문을 bids배열에 끝에 추가함
         bids.push(_order);
         return true;
-    };
+    }
 
     // asks에서 접수된 주문을 id로 찾아서 bids배열에 추가
-    function removeBid(IOrder _order) returns (bool) {
+    function removeBid(uint _id) public returns (bool) {
         // 주문을 bids에서 찾아서 삭제함
         // To do
-        bids.filter(_order);
+        // bids.filter();
         return true;
-    };
+    }
     
-    function addAsk(IOrder _order) returns (bool) {
+    function addAsk(IOrder _order) public returns (bool) {
         // 주문을 bids배열에 끝에 추가함
         bids.push(_order);
         return true;
-    };
+    }
 
     // asks에서 접수된 주문을 id로 찾아서 bids배열에 추가
-    function removeAsk(IOrder _order) returns (bool) {
+    function removeAsk(IOrder _order) public returns (bool) {
         // 주문을 bids에서 찾아서 삭제함
         // To do
-        bids.match(_order);
+        // bids.match(_order);
         return true;
-    };
+    }
 }

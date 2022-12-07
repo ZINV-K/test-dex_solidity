@@ -7,11 +7,10 @@ import "./library/Calculate.sol";
 import "./interface/IOrder.sol";
 import "./interface/IERC20.sol";
 
-
 contract Order is IOrder {
     Calculate constant calculate;
     Orderbook constant orderbook;
-    
+
     // 유저가 접수한 현재 이 주문을 특정짓기 위한 unique id
     uint id;
     // 주문을 접수한 유저
@@ -46,7 +45,7 @@ contract Order is IOrder {
         // 구매하려는 토큰의 수량 / 판매하려는 토큰 수량
         price = amount0 / amount1;
         // 구매하려는 토큰 수량 * 수수료율
-        fee = Calculate.fee(msg.value.amount0, Orderbook.fee);
+        fee = calculate.fee(msg.value.amount0, Orderbook.fee);
     }
 
     // 주문자 본인이 맞는지 확인
@@ -67,11 +66,11 @@ contract Order is IOrder {
     function order(address _maker, address _token0, address _token1, uint price, uint amount0, uint amount1) public returns (bool) {
         // 해당 마켓의 대상 토큰이 사려고 하는 토큰이면 Bids로 접수
         if (token0 == msg.value.token0) {
-            Orderbook.addBids(this);
+            orderbook.addBids(this);
             return true;
         // 해당 마켓의 대상 토큰이 팔려고 하는 토큰이면 Asks로 접수
         } else {
-            Orderbook.addAsk(this);
+            orderbook.addAsk(this);
             return true;
         }
         return false;
@@ -81,11 +80,11 @@ contract Order is IOrder {
     function cancel(address _maker) public returns (bool) {
         // 해당 마켓의 대상 토큰이 사려고 하는 토큰이면 Bids에서 주문 삭제
         if (token0 == msg.value.token0) {
-            Orderbook.removeBids(this);
+            orderbook.removeBids(this);
             return true;
         // 해당 마켓의 대상 토큰이 팔려고 하는 토큰이면 Asks에서 주문 삭제
         } else {
-            Orderbook.removeAsk(this);
+            orderbook.removeAsk(this);
             return true;
         }
         return false;
@@ -93,5 +92,5 @@ contract Order is IOrder {
     
     function matching(address _taker) public returns (bool) {
         return true;
-    };
+    }
 }
