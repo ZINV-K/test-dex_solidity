@@ -7,7 +7,11 @@ import "./library/Calculate.sol";
 import "./interface/IOrder.sol";
 import "./interface/IERC20.sol";
 
+
 contract Order is IOrder {
+    Calculate constant calculate;
+    Orderbook constant orderbook;
+    
     // 유저가 접수한 현재 이 주문을 특정짓기 위한 unique id
     uint id;
     // 주문을 접수한 유저
