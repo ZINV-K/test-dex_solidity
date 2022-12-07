@@ -6,7 +6,7 @@ import "./interface/IOrderbook.sol";
 contract Orderbook is IOrderbook{
     // 오더북 구분을 위한 unique id (BTC/USDT, ETH/USDT 등의 마켓을 구분할때 사용)
     uint id;
-    // BTC/USDT (대상통화)/(기축통화)    
+    // BTC/USDT (대상통화)/(기축통화)
     // 대상통화
     address token0;
     // 기축통화
