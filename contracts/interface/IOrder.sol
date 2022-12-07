@@ -2,23 +2,28 @@ pragma solidity ^0.8.13;
 
 interface IOrder{
     struct Order{
-        // 주문자
+        // 유저가 접수한 현재 이 주문을 특정짓기 위한 unique id
+        uint id;
+        // 주문을 접수한 유저
         address maker;
-        // 주문 상대자 (사람 or 풀)
+        // 주문을 체결한 유저(주문이 체결되면 값이 추가됨)
+        // 주문 체결은 유저가할수도 AMM인 컨트랙트가 할수도 있음
         address taker;
-        // 주문상태
+        // 주문의 상태
+        // 주문의 상태는 순차적으로 주문에 상태와 상태가 변경된 시간 정보의 구조체를 배열로 저장
         Status[] status;
-        // 매도할 토큰
-        address token1;
-        // 사게될 토큰
+        // 주문시 구매하는 토큰
         address token0;
-        // 기준가에 매도할 토큰의 수량
+        // 주문시 매도하는 토큰
+        address token1;
+        // 주문시 구매하는 토큰의 수량
         uint amount0;
-        // 기준가에 구매할 토큰의 수량
+        // 주문시 판매하는 토큰의 수량
         uint amount1;
-        // 거래 기준가
+        // 이 주문을 접수할 거래가
+        // 이 주문가는 시장가거나 유저가 지정한 지정가 일 수 있음
         uint price;
-        // 수수료
+        // 주문시 구매하는 토큰에 적용될 수수료 수량
         uint fee;
     }
 
