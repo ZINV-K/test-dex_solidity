@@ -35,7 +35,7 @@ contract Orderbook is IOrderbook{
     function removeBid(IOrder _order) returns (bool) {
         // 주문을 bids에서 찾아서 삭제함
         // To do
-        bids.match(_order);
+        bids.filter(_order);
         return true;
     };
     
