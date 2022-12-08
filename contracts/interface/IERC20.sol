@@ -1,4 +1,5 @@
-pragma solidity ^0.8.13;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.7.0 <0.9.0;
 
 // ERC20인 토큰 컨트랙트에 있는 기능을 가져와서 인터페이스에 매핑시켜 사용.
 interface IERC20 {
