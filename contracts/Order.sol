@@ -19,13 +19,13 @@ contract Order {
         // 주문의 상태
         // 주문의 상태는 순차적으로 주문에 상태와 상태가 변경된 시간 정보의 구조체를 배열로 저장
         // Status[] status;
-        // 주문시 구매하는 토큰
-        address tokenBuy;
         // 주문시 매도하는 토큰
-        address tokenSell;
-        // 주문시 구매하는 토큰의 수량
+        IERC20 tokenSell;
+        // 주문시 매도하는 토큰의 수량
         uint amount;
-        // 주문시 판매하는 토큰의 수량
+        // 주문시 매수하는 토큰
+        IERC20 tokenBuy;
+        // 주문시 매수하는 토큰의 수량
         uint quantity;
         // 이 주문을 접수할 거래가
         // 이 주문가는 시장가거나 유저가 지정한 지정가 일 수 있음
@@ -56,11 +56,14 @@ contract Order {
 
     // 주문을 접수함
     // function order(address _maker, address _token0, address _token1, uint price, uint amount0, uint amount1) public returns (bool) {
-    function ordering(uint _amount) public {
+    function ordering(address _tokenSell, uint _amount, address _tokenBuy, uint _quantity) public {
         fee = 3;
         data.id = id;
         data.maker = msg.sender;
+        data.tokenSell = IERC20(_tokenSell);
         data.amount = _amount;
+        data.tokenBuy = IERC20(_tokenBuy);
+        data.quantity = _quantity;
         data.fee = (_amount * fee) / 100;
         orderbook.addAsk(data);
         ++id;
