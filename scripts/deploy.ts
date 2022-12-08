@@ -2,7 +2,9 @@ import { ethers } from "hardhat";
 
 async function main() {
     const Order = await ethers.getContractFactory("Order");
-    const order = await order.deploy(new ethers());
+    const order = await order.deploy(
+        
+    );
 
     await lock.deployed();
 }
@@ -13,3 +15,5 @@ main().catch((error) => {
     console.error(error);
     process.exitCode = 1;
 });
+
+import { ethers } from "hardhat";
