@@ -3,70 +3,43 @@ import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Wallet } from "ethers";
+describe("DEX", function () {
+    async function config() {
+        // Contracts are deployed using the first signer/account by default
+        const [signer, otherAccount] = await ethers.getSigners();
 
-const { expect } = require("chai");
-describe("Escrow", function () {
-    let contract;
-
-    let happyPathAccount;
-    let unhappyPathAccount;
-    const amount = ethers.utils.parseUnits("10.0");
-
-    before(async function () {
-        /**
-         * Deploy ERC20 token
-         * */
-        const MOCK_DAI_TOKEN = await ethers.getContractFactory("MockDaiToken");
-        const dai = await MOCK_DAI_TOKEN.deploy();
-        await dai.deployed();
-
-        const MOCK_MECA_TOKEN = await ethers.getContractFactory(
-            "MockMecaToken"
-        );
-        const meca = await MOCK_MECA_TOKEN.deploy();
-        await meca.deployed();
-        /**
-         * Get test accounts
-         * */
-        const accounts = await ethers.getSigners();
-        const owner = accounts[0];
-        /**
-         * Transfer some ERC20s to happyPathAccount
-         * */
-        const SEND_DAI = await dai.transfer(
-            owner.address,
-            "80000000000000000000"
-        );
-        await SEND_DAI.wait();
-        const SEND_MECA = await dai.transfer(
-            owner.address,
-            "80000000000000000000"
-        );
-        await SEND_MECA.wait();
-        /**
-         * Deploy Escrow Contract
-         *
-         * - Add ERC20 address to the constructor
-         * - Add escrow admin wallet address to the constructor
-         * */
         const Order = await ethers.getContractFactory("Order");
-        const order = await Order.deploy(owner, {
-            value: {
-                token0: dai.address,
-                token1: meca.address,
-                amount0: 1,
-            },
-        });
-        await order.deployed();
+        const order = await Order.deploy();
 
-        /**
-         * Seed ERC20 allowance
-         * */
-        // const erc20WithSigner = erc20.connect(happyPathAccount);
-        // const approveTx = await erc20WithSigner.approve(
-        //     contract.address,
-        //     "90000000000000000000"
-        // );
-        await approveTx.wait();
+        const Orderbook = await ethers.getContractFactory("Orderbook");
+        const orderbook = await Orderbook.deploy();
+
+        const amount = 123;
+
+        return { order, orderbook, signer, amount };
+    }
+
+    describe("Order", async function () {
+        const { signer, order, amount } = await loadFixture(config);
+        it("Do ordering", async function () {
+            // 테스트 주문을 실행함
+            await expect(order.ordering(amount)).to.be.revertedWith(
+                "You can't withdraw yet"
+            );
+        });
+
+        it("Should set the right owner", async function () {
+            // order에 등록된 주문을 꺼내 주문자가 맞는지 확인함
+            expect(await (await order.getOrder(0)).maker).to.equal(
+                signer.address
+            );
+        });
+
+        it("Should set the right owner", async function () {
+            // order에 등록된 주문을 꺼내 주문 수량이 맞는지 확인함
+            expect(await (await order.getOrder(0)).amount).to.equal(
+                signer.address
+            );
+        });
     });
 });
